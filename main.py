@@ -19,12 +19,12 @@ print('Please put your data (multiple frames) into "input" directory.\nUse .tif 
 print('############################################################')
 
 
-step1 = Filter('input/*.tif', 'data/filtered/')
-step2 = NLMDenoise('data/filtered/*.tif', 'data/denoised/')
-step3 = Upsample('data/denoised/*.tif', 'data/upsampled/')
-step4 = Align('data/upsampled/*.tif', 'data/aligned/')
-step5 = Merge('data/aligned/*.tif', 'data/results/mean_fusion.tif')
-step6 = Deblur('data/results', 'super_resolution.tif')
+step1 = Filter('input/*.tif', 'data/filtered/')   # Calcula la presencia de blur, calcula la media y elimina las imágenes por debajo de la media
+step2 = NLMDenoise('data/filtered/*.tif', 'data/denoised/')  # Reduce el ruido
+step3 = Upsample('data/denoised/*.tif', 'data/upsampled/')  # Upsampling bicubico (Está con factor = 2 pero se puede cambiar)
+step4 = Align('data/upsampled/*.tif', 'data/aligned/')  # Aalineación basada en características, utilizando opencv
+step5 = Merge('data/aligned/*.tif', 'data/results/mean_fusion.tif') # Suma media de pixeles
+step6 = Deblur('data/results', 'super_resolution.tif') # Algoritmo de deblur, (Está con 30 iteraciones por defecto pero se pueden cambiar).
 
 step_list = ['Complete Run', 'Only Filter', 'Only NLM Denoise', 'Only Upsampling', 'Only Alignment', 'Only Merge', 'Only Deblur', 'Run without Filtering']
 
